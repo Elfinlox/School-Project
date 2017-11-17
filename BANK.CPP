@@ -1,253 +1,3 @@
-/*	The United Bank makes certain computerized facilities in their bank to
-	implement customer records and their daily daily transaction records.
-	The bank keeps certain information as follow:
-
-	INITIAL.dat:
-			acc_no 		: Account number
-			name	     	: Name of the Accountee
-			address		: Address of the accountee
-			balance		: Initial balance of the account
-
-	When the any customer will be create an account, the bank will
-	keep the above fields in their INITIAL.dat file as master account holder.
-
-	BANKING.dat:
-			acc_no		: Account number
-			type		: Transaction type by Cash/Cheque
-			dd,mm,yy	: Date of transaction
-			tran		: Transaction for Deposit or Withdraw
-			interest	: Interest rate
-			amout		: Transaction amount
-			balance		: Current balance after transaction
-
-	While inputing the data record the following validation will check:
-			- the account numbers will generate automatically
-			- the name, address should not blank
-			- transaction date will be the system date/current date
-			- initial deposit for any account not less that Rs. 500/-
-			- Daily transaction will be entered either the word Cash/Cheque
-				and 'D' for deposit and 'W' for withdraw
-
-	Write a menu driven program for making a daily transaction process for the
-	displaying folloing menu options.
-
-		1. Open New Account
-		2. List of Accounts
-		3. See Individual Account
-		4. Daily Transaction
-		5. Monthly Report
-		6. Edit Account
-	In the edit account menu the following processing will occur:
-		1. Modify Account
-		2. Close Account
-		0. Quit
-
-	The following will be the report format as
-
-	Report-1:
-				Accounts List in Bank
-				=====================		Date:10/10/1998
-	=======================================================================
-	Accno#		Name  		Address 			Balance
-	=======================================================================
-	1 		Mr. Sangram	12, E-Block, Rohini		5600
-	2		Mr. Vikas	234, Vinus Appts. Rohini   	12000
-	--		--------	---------			-----
-	--		--------	---------			-----
-	=======================================================================
-	Total Balance in Bank is:					------
-
-	Report-2:
-
-	Account No. 1		Mr. Sangram 			Date:11/10/1998
-				12, E-Block, Rohini
-
-	Global Report of Account
-	========================================================================
-	Date	     Particular	 	Deposit		Withdraw    	Balance
-	========================================================================
-	1-10-1998    INITIAL		2000				2000
-	2-10-1998    CASH		3000				5000
-	8-10-1998    CHEQUE		4000				9000
-	9-10-1998    CASH               		3400		5600
-	========================================================================
-	Total->:			9000				3400										5600
-
-	Report-3:
-
-	Account No. 1		Mr. Sangram 			Date:11/10/1998
-				12, E-Block, Rohini
-
-	Statement Month: 10/01/1999
-	========================================================================
-	Date	     Particular	 	Deposit		Withdraw    	Balance
-	========================================================================
-	1-10-1998    INITIAL		2000				2000
-	2-10-1998    CASH		3000				5000
-	8-10-1998    CHEQUE		4000				9000
-	9-10-1998    CASH               		3400		5600
-	========================================================================
-	Total->:										9000				3400										5600
-
-This project is developed using C++ class concepts and having number of different
-user defined function (UDFs) as follows:
-
-line_hor(.....)
-
-This function passes four parameters including three integer and one character to
-draw different lines to design the screen beautiful. The character parameter draw the
-ASCII character line-by-line on screen. So, for horizontal line draw this function is usefull.
-
-line_ver(.....)
-
-The DRAW_VER(.....) function is helpful for drawing vertical lines on screen to design
-either menu or program forms for data entry, modify, display, delete etc..
-
-box(.....)
-
-This function creates different size of boxes on the screen according to the respective
-parameters. Out of all the parameters they draw boxes till the limit you want.
-
-main_menu(.....)
-
-This is the main screening menu which will display your 6 different prompts and having different activities.
-Each prompt is connected with different functions to perform the respective purposes. Out of all the options
-the last one produces another sub-menu for modifying and deleting existing account informations.
-
-While handling the main menu you can press any selective number to perform the operation or press 0 (Zero) to exit from
-the main menu. But it is also helpful in almost all menus that, you can press 0 (zero) to exit from the respective menu.
-
-edit_menu(.....)
-
-This is one of the sub function which is connected from the main_menu() function to perform the modification and deletion operation
-on banking account data from INITIAL.dat and BANKING.dat data file.
-
-All the the ways the menus are perform the operation according to the account number (accno) except
-the "Open New Account" of main_menu() function because, the "Open New Account" form automatically creates
-the account number after a brief search to the existing account numbers.
-Basically, the numbers are generating automatically, like your 1, 2, 3 ... respectively.
-
-add_to_file(...)
-
-The function add_to_file is used to append new account details into the INITIAL.dat file. This function receives all the fields as paramenter way
-from the new_account() function and adds in the data file.
-
-display_list()
-
-This function is used to display all the account data in the screen. Which displays the accountno#, name, address and
-their respective balance amount in bank. Also show the total bank balance in the screen. All the records are extracted from
-INITIAL.dat data file.
-
-delete_account()
-
-This function is used to delete the account details from INITIAL.dat data file. This is a copy method which
-transfers all the records except deleted accno#. And on the same way the records are reversed from the TEMP.dat file
-to the original data file INITIAL.dat.
-
-update_balance()
-
-When there is a fresh transaction happens on an existing account either deposit (D) or withdraw (W), then the respective balance has to updated
-in the INITIAL.dat data file. While the transactions complete, the balance amount is overwritten in the
-data file. This technique occurs by locating the position in the data file only.
-
-modify()
-
-When there is any modification occurs to the accounts name and address or to the balance amount, the simultaneously it becomes modified in the
-INITIAL.dat data file through the modify_account() function. This process highly depends on the key field account number.
-
-last_accno()
-
-When a new record has to append into the data file, it has to create an automatic accno#. This process happens when we know the last account number. To
-know the last account number by using the last_accno() function. After finding the last account no. it returns the last account value into the new_account() function
-for generating next account number.
-
-found_account()
-
-To do any operation: either for modification, deletion, report(s) or updation, every time the found_account() function first checks the account which is entered by the
-user is their in the INITIAL.dat data file or not. If it is their then a true value is returned else a false value is returned. While depending the value further process can
-occurs.
-
-*return_name()
-
-When any reports are occur, on top of the report the account name is displayed. This function returns the name of the account holder and displays in appropriate report.
-
-*return_address()
-
-When any reports are occur, on top of the report the account address is displayed. This function returns the address of the account holder and displays in appropriate report.
-
-give_balance()
-
-While daily transaction is occurs, the last balance is always required to update the INITIAL.dat data file. So, to know the last balance at the time of
-daily transaction the give_balance function returns the value to the transaction() function.
-
-recordno()
-
-Either for new_account, update account, or modify account, or modify balance the recordno() function finds the
-record position of existing account no. in the data files, where the transacted record can over written.
-
-display()
-
-The function is used to display the account details from either INITIAL.dat or BANKING.dat data file. While the modify() function actives, the accno parameter searches this
-account details from the respective file to display on the screen before modify.
-
-modify_account()
-
-This function is used to modify the existing accounts name and address at the existing location. To modify the account it first searches the accounts location and over written at the same location
-using seekg() function.
-
-new_account()
-
-This function is used to create a new account of a customer after entering all the details of the same. In this screen the automatic account number is created and a propr validations are their into name, address, and initial deposit.
-After entering all the informations related to the customer, the records are appended in the INITIAL.dat and BANKING.dat data file by useing a function add_to_file of both class initial and account.
-
-close_account()
-
-On the same way like delete_account() function, the close_account() function also closes all the transaction record in BANKING.dat data file.
-After closing the account there is no transaction records are in the data files.
-
-display_account()
-
-This function is used to display all the transaction includeing the initial deposit in the screen. This is a global report to display
-all the transaction records in the screen. It shows all the deposits and withdraw column and date wise balance also.
-
-transaction()
-
-The transaction() function provides a screen for making daily transaction. While transaction it show the balance amount, and then eiter a transaction for deposit(D) or withdraw(W) on either CASH or CHEQUE.
-Then the transacted record is updated in the INITIAL.dat and BANKING.dat data file. Also the same funcitons used two important function update_balance() and add_to_file to update balance in INITIAL.dat data file and
-the transacted record in BANKING.dat data file.
-
-clear()
-
-The function is used to clear the screen from a specified row and column position.
-
-month_report()
-
-Like any other banking transaction, when a customer want his monthly report this function helps to generate the report on the screen.
-When you enter a date an account number, it searches all the transaction of the previous month of the enter date and extracts a previous balance (B/F...) amount
-first on the screen and then the entered months all the transaction on the screen. Finally shows the current balance amount also.
-
-add_to_file()
-
-This function is used to append new record into the BANKING.dat data file. While the function actives, it passed all the fields as parameter into the function and
-appends as a fresh record into the file.
-
-delete_account()
-
-This function is used to delete the account from the BANKING.dat data file. This is a copy method to delete the account from file.
-
-no_of_days()
-
-This function is used to find total number of years, months and days between two days.
-
-box_for_display()
-
-This function is used to display the heading of the report as:
-
-	Date	     Particular	 	Deposit		Withdraw    	Balance
-
-	*/
-
-
 // Declaration of header files
 #include <iostream.h>
 #include <fstream.h>
@@ -273,7 +23,6 @@ option a[]= {
 				 "List of Accounts",
 				 "Display Account",
 				 "Daily Transaction",
-				 "Monthly Report",
 				 "Edit Account",
 				 "Exit"
 			};
@@ -346,7 +95,7 @@ class account
 		void display_account(void); // Function to display the accounts
 		void transaction(void); // To display the transaction process
 		void clear(int, int); // Function to perform a clear screen function
-		void month_report(void); // Function to list monthWise transaction report
+		
 
 	private:
 		void add_to_file(int, int, int, int, char, char t_type[10], float, float, float); // Function to add transaction records
@@ -422,7 +171,7 @@ char main_menu::menu()
 	cprintf("Banking");
 	textbackground(BLACK);
 	textcolor(WHITE);
-	for(i = 1; i < 7; i++)
+	for(i = 1; i < 6; i++)
 	normalvideo(32, i+10, a[i]);
 	reversevideo(32, 10, a[0]);
 	i = done = 0;
@@ -435,13 +184,13 @@ char main_menu::menu()
 							normalvideo(32 , 10 + i , a[i]);
 							i--;
 							if(i == -1)
-								i = 6;
+								i = 5;
 							reversevideo(32 , 10 + i , a[i]);
 							break;
 				case 's' :
 							normalvideo(32 , 10 + i , a[i]);
 							i++;
-							if(i == 7)
+							if(i == 6)
 								i = 1;
 							reversevideo(32 , 10 + i , a[i]);
 							break;
@@ -508,20 +257,13 @@ void main_menu::control_menu()
 			case '5':
 				box(3, 1, 75, 24);
 				box(5, 2, 73, 23);
-
-				_setcursortype(_NORMALCURSOR);
-				a.month_report(); // Monthly report for any account
-				break;
-			case '6':
-				box(3, 1, 75, 24);
-				box(5, 2, 73, 23);
 				gotoxy(10,10);
 				edit_menu(); // Sub menu for modifying or deleting any account
 				break;
-			case '7' :
-				choice = 6;
+			case '6' :
+				choice = 5;
 		   }
-	  } while (choice != 6);
+	  } while (choice != 5);
 }
 
 /* This function is used to return the cursor position to the edit menu function where the
@@ -1374,182 +1116,6 @@ void account::display_account(void)
 	}
 }
 
-/* Function to list monthWise transaction report. This is a monthwise status report for any
-account, and the user has to feed only any date of any month and the account no. When the date
-and account no. entered the function will check all the transactions of previous month of your entered date
-and find the previous balance in the variable pre_balance, which will be the "B/F ......" amount for reporting month.
-Then, from that period all remaining transactions of the same entered month will display on your screen. */
-
-void account::month_report(void)
-{
-
-	int dd1, mm1, yy1;
-	clrscr();
-	gotoxy(10, 5);
-	cout << "Enter any date of a month ";
-	gotoxy(38, 5);
-	cin >> dd1;
-	gotoxy(40, 5);
-	cout << "-";
-	gotoxy(41, 5);
-	cin >> mm1;
-	gotoxy(43, 5);
-	cout << "-";
-	gotoxy(44, 5);
-	cin >> yy1;
-	clrscr();
-	char t_acc[10];
-	int j;
-	int tamt = 0, damt = 0, wamt = 0;
-	int t, t_accno;
-	gotoxy(71, 1);
-	cout << "<0>=Exit";
-	gotoxy(5, 5);
-	cout << "Enter account no. ";
-	gets(t_acc);
-	t = atoi(t_acc);
-	t_accno = t;
-	if (t_accno == 0)
-		return;
-	clrscr();
-	initial ini;
-	if (!ini.found_account(t_accno))
-	{
-		gotoxy(5, 5);
-		cout << "\7Account not found";
-		getch();
-		return;
-	}
-	box_for_display(t_accno);
-	gotoxy(4, 5);
-	cout << "Statement Month: " << dd1 << "/" << mm1 << "/" << yy1;
-	getch();
-
-	int row = 9, flag;
-	fstream file;
-	file.open("BANKING.dat", ios::in);
-	float pre_balance = 0.0; // Previous balance amount
-
-	// The loop finds the last months balance
-	while (file.read((char *)this, sizeof(account)))
-	{
-		// Checks the account no. and till the previous month and till current year
-		if ((accno == t_accno) && ((mm < mm1 && yy <= yy1) || (mm1 < mm && yy < yy1)))
-		{
-			pre_balance = balance;
-		}
-	}
-
-	file.close();
-	file.open("BANKING.dat", ios::in);
-	gotoxy(54, row);
-
-	cout << "B/F ....    " << setw(15)
-				<< setprecision(2)
-				<< setiosflags(ios::left)
-				<< setiosflags(ios::showpoint)
-				<< setiosflags(ios::fixed)
-				<< pre_balance;
-	row++;
-
-	// The loop displays the current months transaction after previous month
-	while (file.read((char *)this, sizeof(account)))
-	{
-		if ((accno == t_accno) && (mm1 == mm && yy1 <= yy))
-		{
-			flag = 0;
-			delay(2);
-			gotoxy(4, row);
-			cout << dd << "-" << mm << "-" << yy;
-			gotoxy(16, row);
-			puts(type);
-			if (tran == 'D')
-			{
-				damt = damt + amount;
-				tamt = tamt + amount;
-				gotoxy(30, row);
-			}
-			else
-			{
-				wamt = wamt + amount;
-				tamt = tamt - amount;
-				gotoxy(42, row);
-			}
-
-			cout <<  setw(15)
-				<< setprecision(2)
-				<< setiosflags(ios::left)
-				<< setiosflags(ios::showpoint)
-				<< setiosflags(ios::fixed)
-				<< amount;
-
-			gotoxy(66, row);
-			cout << setw(15)
-				<< setprecision(2)
-				<< setiosflags(ios::left)
-				<< setiosflags(ios::showpoint)
-				<< setiosflags(ios::fixed)
-				<< balance;
-			row++;
-
-			// If row increases 23 then the next screen continues
-			if (row > 23)
-			{
-				flag = 1;
-				row = 7;
-				gotoxy(4, 24);
-				cout << "Press any key to continue";
-				getch();
-				clrscr();
-				box_for_display(t_accno);
-			}
-		}
-	}
-	file.close();
-	gotoxy(1, row);
-	for (j = 1; j <= 79; j++)
-		cout << "=";
-	row++;
-
-	gotoxy(4, row);
-	cout << "Total-->:";
-	gotoxy(30, row);
-
-	// Deposited amount
-	cout << setw(15)    // setwidth
-		<< setprecision(2)    // set position of decimal point
-		<< setiosflags(ios::left)   // set left justified output
-		<< setiosflags(ios::showpoint)  // always show decimal point
-		<< setiosflags(ios::fixed)    // set fixed notation for display
-		<< damt;
-
-	gotoxy(42, row);
-	// Withdraw amount
-	cout << setw(15)
-		<< setprecision(2)
-		<< setiosflags(ios::left)
-		<< setiosflags(ios::showpoint)
-		<< setiosflags(ios::fixed)
-		<< wamt;
-
-	gotoxy(66, row);
-	tamt = tamt + pre_balance;
-	// Balance amount
-	cout << setw(15)
-		<< setprecision(2)
-		<< setiosflags(ios::left)
-		<< setiosflags(ios::showpoint)
-		<< setiosflags(ios::fixed)
-		<< tamt;
-
-	if (!flag)
-	{
-		gotoxy(4, 24);
-		cout << "Press any key to continue...";
-		getch();
-	}
-
-}
 
 /* Function for creating new account for new customer. This is a very important function
 which used to create new account with all the details of the customer. This function used number
