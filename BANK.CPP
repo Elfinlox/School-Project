@@ -56,7 +56,7 @@ class shape
 	public:
 		void line_hor(int, int, int, char);
 		void line_ver(int, int, int, char);
-		void box(int, int, int, int, char);
+		void box(int, int, int, int);
 };
 
 
@@ -95,7 +95,7 @@ class account
 		void display_account(void); // Function to display the accounts
 		void transaction(void); // To display the transaction process
 		void clear(int, int); // Function to perform a clear screen function
-		
+
 
 	private:
 		void add_to_file(int, int, int, int, char, char t_type[10], float, float, float); // Function to add transaction records
@@ -115,8 +115,8 @@ class account
 void main_menu::normalvideo(int x,int y,char *str)
 {
 
-   	gotoxy(x,y);
-   	cprintf("%s",str);
+	gotoxy(x,y);
+	cprintf("%s",str);
 }
 
 // Function to move the cursor on the menu prompt with a reverse video color
@@ -197,13 +197,14 @@ char main_menu::menu()
 				case 13 :
 							done = 1;
 							break;
-				case 27 :  	exit(0);
+				case 27 :  	help();
+							control_menu();
 							break;
 				default :
 							break;
 
 			}
-		
+
 	}
 	while (!done);
 	_setcursortype(_NOCURSOR);
@@ -274,7 +275,7 @@ char main_menu::e_menu()
 {
 	clrscr();
 
-	
+
 	box(25,6,60,15);
 	box(23,4,62,17);
 	textcolor(WHITE);
@@ -312,7 +313,7 @@ char main_menu::e_menu()
 			case 13:
 				done = 1;
 				break;
-			case 27: 
+			case 27:
 				control_menu();
 			default:
 				break;
@@ -391,29 +392,14 @@ void shape::line_ver(int row1, int row2, int column, char c)
 
 /* Function for drawing box
  This function draws a box for menus */
-void shape::box(int column1, int row1, int column2, int row2, char c)
+void shape::box(int column1, int row1, int column2, int row2)
 {
-	char ch = 218;
 	char c1, c2, c3, c4;
 	char l1 = 196, l2 = 179;
-	if (c == ch)
-	{
-		c1 = 218;
-		c2 = 191;
-		c3 = 217;
-		c4 = 217;
-		l1 = 196;
-		l2 = 179;
-	}
-	else
-	{
-		c1 = c;
-		c2 = c;
-		c3 = c;
-		c4 = c;
-		l1 = c;
-		c2 = c;
-	}
+	c1 = 218;
+	c2 = 191;
+	c3 = 192;
+	c4 = 217;
 	gotoxy(column1, row1);
 	cout << c1;
 	gotoxy(column2, row1);
@@ -446,23 +432,26 @@ char rules[][100] = {
 						"	 Editing Account information.",
 						"	 Displaying a list of accounts held, and their transaction details.",
 						" ~ Use Arrow Keys and Enter to Navigate through the program.",
+						" ~ Use Escape key to return to this help screen.",
 						" ~ The creator is not responsible for any information leak.",
 						" ~ Bank account doesnt provide PIN facility.",
-						" ~ Press any key if you Accept the Terms and Conditions."
+						" ~ Press Enter key if you Accept the Terms and Conditions."
 					};
 
 
 
 void main_menu::help(void)
 {
-	clrscr();
-	box(24,2,52,4);
-	normalvideo(25,3,"Welcome to Bank Placeholder");
-	box(2,5,78,24);
-	normalvideo(4,6,"Guidelines :-");
-	for(int i = 0; i < 10; i++)
-		normalvideo(4, 7 + i, rules[i]);
-	getch();
+	do
+	{
+		clrscr();
+		box(24,2,52,4);
+		normalvideo(25,3,"Welcome to Bank Placeholder");
+		box(2,5,78,24);
+		normalvideo(4,6,"Guidelines :-");
+		for(int i = 0; i < 11; i++)
+			normalvideo(4, 7 + i, rules[i]);
+	}while(getch() != 13);
 }
 
 /* Function for modifying the existing accounts
@@ -544,6 +533,7 @@ void initial::modify(void)
 	{
 		a.clear(15, 15);
 		a.clear(5, 23);
+
 		gotoxy(5, 23);
 		cout << "Enter Name";
 		valid = 1;
@@ -1149,8 +1139,8 @@ void account::new_account(void)
 	initial ini;
 
 	shape s;
-	s.box(2, 1, 79, 25, 218);
-	s.box(25, 2, 54, 4, 218);
+	s.box(2, 1, 79, 25);
+	s.box(25, 2, 54, 4);
 
 	gotoxy(65, 2);
 	cout << "<0> = Exit";
@@ -1194,9 +1184,12 @@ void account::new_account(void)
 
 	do
 	{
-		
+
 		clear(5, 23);
+		gotoxy(79,23);
+		cout<<(char)179;
 		gotoxy(5, 23);
+
 		cout << "Enter your Name";
 		valid = 1;
 		gotoxy(15, 10);
@@ -1217,6 +1210,10 @@ void account::new_account(void)
 	{
 		clear(25, 15);
 		clear(5, 23);
+		gotoxy(79,23);
+		cout<<(char)179;
+		gotoxy(79,15);
+		cout<<(char)179;
 		gotoxy(5, 23);
 		cout << "Enter your Address";
 		valid = 1;
@@ -1240,10 +1237,14 @@ void account::new_account(void)
 	{
 		clear(13, 12);
 		clear(5, 23);
+		gotoxy(79,12);
+		cout<<(char)179;
+		gotoxy(79,23);
+		cout<<(char)179;
 		gotoxy(5, 23);
 		cout << "Enter initial balance";
 		valid = 1;
-		gotoxy(23, 14);
+		gotoxy(23, 13);
 		gets(t);
 		t_bal = atof(t);
 		t_balance = t_bal;
@@ -1255,12 +1256,16 @@ void account::new_account(void)
 			getch();
 		}
 	}while (!valid);
-	
+
 	clear(5, 23);
+	gotoxy(79,23);
+	cout<<(char)179;
 
 	do
 	{
 		clear(5, 17);
+		gotoxy(79,17);
+		cout<<(char)179;
 		valid = 1;
 		gotoxy(5, 17);
 		cout << "Save the record <Y/N>: ";
